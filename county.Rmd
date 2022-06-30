@@ -1,0 +1,50 @@
+---
+title: "County"
+output: html_document
+date: '2022-06-30'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(tidycensus)
+library(ggthemes)
+library(tigris)
+```
+```{r warning = FALSE}
+vars <- load_variables(2018, "acs5")|>
+  filter(concept == "RACE")
+some_vars <- vars|>
+  slice(2:3)|>
+  pull(name)
+more_vars <- append(some_vars, "B02001_005")
+race_vars <- append(more_vars, "B03003_003")
+```
+```{r warning = FALSE}
+county_data <- get_acs(geography = "tract",
+        variables = race_vars,
+        year = 2018,
+        state = "Ohio",
+        county = "Hamilton",
+        geometry = TRUE,
+        summary_var = "B02001_001")
+```
+```{r}
+county_data |>
+  mutate(variable = ifelse(variable == "B02001_002", "White", variable))|>
+  mutate(variable = ifelse(variable == "B02001_003", "Black", variable))|>
+  mutate(variable = ifelse(variable == "B02001_005", "Asian", variable))|>
+  mutate(variable = ifelse(variable == "B03003_003", "Hispanic", variable))|>
+  mutate(Percent = (estimate / summary_est) * 100) |>
+  ggplot(aes(fill = Percent, color = Percent))+
+  geom_sf() +
+  facet_wrap(~ variable) +
+  scale_fill_viridis_c(direction = -1) +
+  scale_color_viridis_c(direction = -1)+
+  theme_void() +
+  labs(title = "Racial Geography of Hamilton County, Ohio",
+       fill = "Percent",
+       caption = "Source: American Community Survey 2014-18")
+```
+
+
