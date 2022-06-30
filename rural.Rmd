@@ -1,0 +1,37 @@
+---
+title: "Rural"
+output: html_document
+date: '2022-06-30'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(tidycensus)
+library(ggthemes)
+library(tigris)
+```
+
+```{r}
+rural_data <- get_decennial(geography = "state",
+              variables = c("P001001","P002005"),
+              year = 2010,
+              output = "wide",
+              geometry = TRUE)
+```
+
+
+```{r}
+rural_data |>
+  shift_geometry()|>
+  ggplot(aes(fill = (P002005 / P001001) * 100))+
+  scale_fill_viridis_c(option = "plasma", direction = -1) +
+  geom_sf() +
+  theme_void() +
+  labs(title = "Rural Geography of the United States",
+       subtitle= "Central, landlocked states tend to be more rural",
+       fill = "Percent Rural",
+       caption = "Source: Census 2010")
+```
+
+
