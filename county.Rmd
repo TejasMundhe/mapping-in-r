@@ -19,6 +19,7 @@ some_vars <- vars|>
   pull(name)
 more_vars <- append(some_vars, "B02001_005")
 race_vars <- append(more_vars, "B03003_003")
+vars
 ```
 ```{r warning = FALSE}
 county_data <- get_acs(geography = "tract",
