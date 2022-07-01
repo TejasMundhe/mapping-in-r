@@ -1,0 +1,37 @@
+---
+title: "Food Deserts"
+output: html_document
+date: '2022-07-01'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tidycensus)
+library(jsonlite)
+library(ggthemes)
+```
+Poorer areas in many regions of the U.S don't have access to grocery stores, forcing people to walk for miles just to feed themselves. These areas are called Food Deserts, which are shown in the plot below.
+
+```{r}
+county_stores <- fromJSON("https://services1.arcgis.com/RLQu0rK7h4kbsBq5/arcgis/rest/services/Store_Locations/FeatureServer/0/query?where=State%20%3D%20'OH'%20AND%20County%20%3D%20'HAMILTON'&outFields=Store_Name,State,County,Longitude,Latitude&outSR=4326&f=json")
+
+county_stores <- county_stores$features$attributes
+
+county_map <- get_acs(geography = "tract", variables = "B06012_002", year = 2018, state = "Ohio", county = "Hamilton County", geometry = TRUE, summary_var = "B02001_001")
+```
+```{r}
+county_map|>
+  mutate(Percent = (estimate / summary_est) * 100) |>
+  ggplot(aes(fill = Percent, color = Percent))+
+  geom_sf() +
+  scale_fill_viridis_c(direction = -1) +
+  scale_color_viridis_c(direction = -1) +
+  geom_point(data = county_stores, inherit.aes = FALSE, aes(x = Longitude, y = Latitude), size = 0.5) +
+  theme_void() +
+  labs(title = "Grocery Stores and Income in Hamilton County, Ohio",
+       subtitle = "A food desert is located in the center of downtown Cincinnati",
+       caption = "Sources: USDA Food and Nutrion Service and SNAP Retailer Locator")
+```
+
+

@@ -11,7 +11,7 @@ library(tidycensus)
 library(ggthemes)
 library(tigris)
 ```
-```{r warning = FALSE}
+```{r warning = FALSE, include = FALSE}
 vars <- load_variables(2018, "acs5")|>
   filter(concept == "RACE")
 some_vars <- vars|>
@@ -21,7 +21,7 @@ more_vars <- append(some_vars, "B02001_005")
 race_vars <- append(more_vars, "B03003_003")
 vars
 ```
-```{r warning = FALSE}
+```{r warning = FALSE, include = FALSE}
 county_data <- get_acs(geography = "tract",
         variables = race_vars,
         year = 2018,

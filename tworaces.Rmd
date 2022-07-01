@@ -12,7 +12,7 @@ library(ggthemes)
 library(tigris)
 ```
 
-```{r}
+```{r warning = FALSE, include = FALSE}
 continental <- state.name[! state.name %in% c("Alaska", "Hawaii")]
 races <- get_acs(geography = "tract",
         variables = "B02001_008",
@@ -21,7 +21,7 @@ races <- get_acs(geography = "tract",
         geometry = TRUE,
         summary_var = "B02001_001")
 ```
-```{r}
+```{r warning = FALSE, include = FALSE}
 twoRaceGraph <- races|>
   mutate(Percent = (estimate / summary_est) * 100)|>
   ggplot(aes(fill = Percent)) +
