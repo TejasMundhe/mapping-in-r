@@ -1,5 +1,5 @@
 ---
-title: "Senior"
+title: "Senior Citizen Concentration"
 output: html_document
 date: '2022-06-30'
 ---
@@ -11,6 +11,8 @@ library(tidycensus)
 library(ggthemes)
 library(tigris)
 ```
+
+Senior citizens in the U.S are citizens who are at least 65 years old. The plot below visualizes the percentage of senior citizens in the states of Washington, Oregen, and Idaho(Northwestern States).
 
 ```{r warning = FALSE, include = FALSE}
 nw_states <- c("OR", "WA", "ID")

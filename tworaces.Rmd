@@ -1,16 +1,18 @@
 ---
-title: "Two Races"
+title: "Multiracial American Concentration"
 output: html_document
 date: '2022-06-30'
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(tidycensus)
 library(ggthemes)
 library(tigris)
 ```
+
+Multiracial Americans are U.S citizens who are of more than one race or ethnicity. The plot below visualizes the density of U.S citizens of two or more races by state.
 
 ```{r warning = FALSE, include = FALSE}
 continental <- state.name[! state.name %in% c("Alaska", "Hawaii")]
@@ -28,13 +30,13 @@ twoRaceGraph <- races|>
   geom_sf(size = 0.003) +
   scale_fill_viridis_c(direction = -1, option = "inferno") +
   theme_void() +
-  labs(title = "Percentage of People of Two or More Races across the U.S" +
+  labs(title = "Percentage of People of Two or More Races across the U.S",
        fill = "Percent",
        caption = "Source: American Community Survey 2014-18")
-write_rds(twoRaceGraph, races_map.rds)
+write_rds(twoRaceGraph, "races_map.rds")
 ```
 
 ```{r}
-read_rds(races_map.rds)
+read_rds("races_map.rds")
 ```
 

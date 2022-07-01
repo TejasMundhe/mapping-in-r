@@ -1,5 +1,5 @@
 ---
-title: "County"
+title: "County Racial Dispersion"
 output: html_document
 date: '2022-06-30'
 ---
@@ -11,6 +11,9 @@ library(tidycensus)
 library(ggthemes)
 library(tigris)
 ```
+
+The below map exemplifies the percentage of different races per census tract in Hamilton County, Ohio.(Home to Cincinnati, OH)
+
 ```{r warning = FALSE, include = FALSE}
 vars <- load_variables(2018, "acs5")|>
   filter(concept == "RACE")
