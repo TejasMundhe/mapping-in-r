@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: "Home"
 output: html_document 
 date: '2022-06-30'
 ---
@@ -11,4 +11,4 @@ library(tidycensus)
 library(ggthemes)
 library(tigris)
 ```
-I will be practicing mapping U.S census data through this website!
+I will be practicing mapping U.S census data through this website! Feel free to explore the different pages to find interesting plots about racial, age, or population density demographics ranging from the continental U.S to my home county.
